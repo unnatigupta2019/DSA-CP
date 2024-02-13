@@ -264,6 +264,45 @@ vector<int> Diagonalorder(Node *root)
 
     return ans1;
 }
+void verticalTraversal(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    queue<pair<Node *, int>> q;
+    map<int, vector<int>> m;
+    q.push({root, 0});
+    while (!q.empty())
+    {
+        int s = q.size();
+        while (s--)
+        {
+            Node *f = q.front().first;
+            int l = q.front().second;
+            m[l].push_back(f->data);
+            q.pop();
+
+            if (f->left)
+            {
+                q.push({f->left, l - 1});
+            }
+            if (f->right)
+            {
+                q.push({f->right, l + 1});
+            }
+        }
+    }
+    for (auto x : m)
+    {
+        cout << x.first << "-->";
+        for (auto y : x.second)
+        {
+            cout << y << " ";
+        }
+        cout << endl;
+    }
+}
 int main()
 {
     Node *root = new Node(1);
@@ -282,8 +321,8 @@ int main()
     // cout << endl;
     // Levelorder(root);
     // cout << endl;
-    Levelorderspiral(root);
-    cout << endl;
+    // Levelorderspiral(root);
+    // cout << endl;
     // vector<int> v = Boundaryorder(root);
     // for (auto x : v)
     // {
@@ -296,5 +335,6 @@ int main()
     //     cout << x << " ";
     // }
     // cout << endl;
+    verticalTraversal(root);
     return 0;
 }
